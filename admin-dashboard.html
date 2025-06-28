@@ -2,31 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Admin Dashboard | Joven's Catering</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #000;
-      color: #fff;
+    :root {
+      --gold: #FFD700;
+      --black: #0d0d0d;
+      --dark-gray: #1a1a1a;
+      --light-gold: #fff3b0;
     }
 
-    nav {
-      background-color: #111;
-      padding: 10px 20px;
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--black);
+      color: var(--gold);
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu {
+      background-color: var(--dark-gray);
+      padding: 15px 0;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid gold;
     }
 
-    nav h1 {
+    .logo h1 {
+      font-size: 24px;
       margin: 0;
-      color: gold;
+      color: var(--gold);
     }
 
-    nav ul {
+    .nav ul {
       list-style: none;
       display: flex;
       gap: 20px;
@@ -34,115 +51,256 @@
       margin: 0;
     }
 
-    nav ul li a {
-      color: white;
+    .nav ul li a {
+      color: var(--gold);
       text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
       font-weight: bold;
-      transition: color 0.3s;
+      transition: background-color 0.3s ease-in-out;
     }
 
-    nav ul li a:hover {
-      color: gold;
+    .nav ul li a:hover {
+      background-color: var(--gold);
+      color: var(--black);
     }
 
-    .container {
-      padding: 20px;
+    .section {
+      display: none;
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: auto;
     }
 
-    input, button {
+    .section.active { display: block; }
+
+    .info-container {
+      background-color: var(--dark-gray);
+      border: 1px solid var(--gold);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .info-container h3 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .info-container p {
+      color: var(--light-gold);
+      font-size: 17px;
+    }
+
+    form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      font-weight: bold;
+      color: var(--gold);
+    }
+
+    input[type="text"],
+    input[type="file"] {
       padding: 10px;
-      margin: 5px 0;
-      border-radius: 5px;
-      border: none;
+      border: 1px solid var(--gold);
+      background-color: #222;
+      color: var(--gold);
+      border-radius: 6px;
     }
 
     button {
-      background-color: gold;
+      background-color: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
     }
 
-    .item {
+    button:hover {
+      background-color: var(--light-gold);
+    }
+
+    .product-grid-admin {
+      display: flex;
+      gap: 20px;
       background-color: #1a1a1a;
-      margin-top: 10px;
-      padding: 10px;
-      border-left: 4px solid gold;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+    }
+
+    .product-grid-admin img {
+      width: 150px;
+      height: auto;
+      border-radius: 8px;
+      border: 2px solid var(--gold);
+    }
+
+    .product-edit {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .save-btn {
+      background-color: var(--gold);
+      color: var(--black);
+    }
+
+    .delete-btn {
+      background-color: crimson;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: darkred;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <h1>Admin Panel</h1>
-    <ul>
-      <li><a href="#menu-section">Menu</a></li>
-      <li><a href="#services-section">Services</a></li>
-      <li><a href="#gallery-section">Gallery</a></li>
-      <li><a href="#" onclick="logout()">Logout</a></li>
-    </ul>
-  </nav>
+  <!-- Navigation -->
+  <section class="menu">
+    <div class="nav">
+      <div class="logo">
+        <h1>Admin | Joven's Catering</h1>
+      </div>
+      <ul>
+        <li><a class="nav-link" href="#" data-section="admin-home">HOME</a></li>
+        <li><a class="nav-link" href="#" data-section="admin-menu">Menu</a></li>
+        <li><a class="nav-link" href="#" data-section="admin-services">Services</a></li>
+        <li><a class="nav-link" href="#" data-section="admin-gallery">Gallery</a></li>
+        <li><a class="nav-link" href="#" onclick="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </section>
 
-  <div class="container">
-    <section id="menu-section">
-      <h2>Add Menu Item</h2>
-      <input type="text" id="itemName" placeholder="Item Name" />
-      <input type="text" id="itemPrice" placeholder="Price" />
-      <button onclick="addItem()">Add Menu Item</button>
-      <div id="menuList"></div>
-    </section>
-  </div>
+  <!-- Manage Menu -->
+  <section class="section" id="admin-menu">
+    <div class="info-container">
+      <h3>🍽️ Manage Menu</h3>
+      <p>Edit or remove menu items below.</p>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+      <form id="addDishForm">
+        <label for="newName">Dish Name</label>
+        <input type="text" id="newName" placeholder="e.g., Party Platter" required />
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCexe-ghq_yXyylZFelraN13prdyMLbE_0",
-      authDomain: "jovens-84586.firebaseapp.com",
-      projectId: "jovens-84586",
-      storageBucket: "jovens-84586.firebasestorage.app",
-      messagingSenderId: "950037879544",
-      appId: "1:950037879544:web:5e66d67c2bf58a9c74790d"
-    };
+        <label for="newPrice">Price</label>
+        <input type="text" id="newPrice" placeholder="e.g., ₱1200" required />
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+        <label for="newImg">Select Image</label>
+        <input type="file" id="newImg" accept="image/*" required />
 
-    onAuthStateChanged(auth, (user) => {
-      if (!user || !["joven.admin@gmail.com", "admin@example.com"].includes(user.email.toLowerCase())) {
-        alert("Access Denied");
-        window.location.href = "index.html";
-      } else {
-        loadMenu();
-      }
+        <button type="submit">+ Add Dish</button>
+      </form>
+
+      <div class="row" id="menuContainer">
+        <!-- Dish items will be dynamically inserted here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Manage Services -->
+  <section class="section" id="admin-services">
+    <div class="info-container">
+      <h3>🛠️ Manage Services</h3>
+      <p>Add or update services offered.</p>
+      <form>
+        <label>Service Name</label>
+        <input type="text" placeholder="e.g., Table Styling" required />
+        <label>Description</label>
+        <input type="text" placeholder="e.g., Includes linens, centerpieces..." required />
+        <button type="submit">Save Service</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Gallery Upload -->
+  <section class="section" id="admin-gallery">
+    <div class="info-container">
+      <h3>📸 Gallery Upload</h3>
+      <p>Upload images of events to showcase in the gallery.</p>
+      <form>
+        <label>Select Image</label>
+        <input type="file" accept="image/*" />
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = link.getAttribute('data-section');
+        if (!target) return;
+        sections.forEach(s => s.classList.remove('active'));
+        document.getElementById(target)?.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
     });
 
-    async function addItem() {
-      const name = document.getElementById('itemName').value.trim();
-      const price = document.getElementById('itemPrice').value.trim();
-      if (!name || !price) return alert("Please fill all fields.");
+    function logout() {
+      alert("Logged out successfully.");
+      window.location.href = "index.html";
+    }
 
-      try {
-        await addDoc(collection(db, "menuItems"), { name, price });
-        alert("Item added!");
-        document.getElementById('itemName').value = '';
-        document.getElementById('itemPrice').value = '';
-        loadMenu();
-      } catch (e) {
-        alert("Error: " + e.message);
+    document.addEventListener('DOMContentLoaded', () => {
+      sections.forEach(s => s.classList.remove('active'));
+      document.getElementById('admin-menu').classList.add('active');
+    });
+
+    document.getElementById("addDishForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("newName").value.trim();
+      const price = document.getElementById("newPrice").value.trim();
+      const imgFile = document.getElementById("newImg").files[0];
+
+      if (!name || !price || !imgFile) return alert("Fill all required fields");
+
+      const imageUrl = URL.createObjectURL(imgFile); // Temporary preview
+
+      const container = document.getElementById("menuContainer");
+      const div = document.createElement("div");
+      div.className = "product-grid-admin";
+      div.innerHTML = `
+        <img src="${imageUrl}" alt="${name}" />
+        <div class="product-edit">
+          <input type="text" value="${name}" placeholder="Dish Name" />
+          <input type="text" value="${price}" placeholder="Price" />
+          <div class="buttons">
+            <button class="save-btn">📂 Save</button>
+            <button class="delete-btn">🗑️ Delete</button>
+          </div>
+        </div>`;
+      container.appendChild(div);
+      document.getElementById("addDishForm").reset();
+    });
+
+    document.addEventListener("click", function (e) {
+      if (e.target.classList.contains("delete-btn")) {
+        e.target.closest(".product-grid-admin").remove();
+      } else if (e.target.classList.contains("save-btn")) {
+        alert("Dish updated!");
       }
-    }
-
-    async function loadMenu() {
-      const menuList = document.getElementById('menuList');
-      menuList.innerHTML = "";
-      const snapshot = await getDocs(collection(db, "menuItems"));
-      snapshot.forEach(doc => {
-        const item = doc.data();
-        menuList.innerHTML += `<div class="item"><strong>${item.name}</strong> - ₱${item.price}</div>`;
-      });
-    }
+    });
   </script>
 </body>
 </html>
